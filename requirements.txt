@@ -1,0 +1,14 @@
+jupyterlab
+numpy
+tqdm
+python-igraph
+gensim
+cxrandomwalk
+xnetwork
+pandas
+matplotlib
+numba
+llvmlite
+umap-learn
+ipympl
+ipywidgets
