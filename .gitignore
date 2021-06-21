@@ -212,6 +212,8 @@ Temporary Items
 #VSCode
 .vscode
 
-./models
-./networks
-./sentences
+./models/
+./networks/
+./sentences/
+./figures/
+
