@@ -14,11 +14,6 @@
 #  * Interactive visualization of the embedding
 #  * SemAxis exploration
 
-# #### Packages needed
-
-# In[1]:
-
-
 from tqdm.auto import tqdm
 import pandas as pd
 import xnetwork as xnet
@@ -45,39 +40,26 @@ import emlens_semaxis as emlens
 from gensim.models.callbacks import CallbackAny2Vec
 
 
-# ### Set the query ID here
+# Parameters
+maxSamples = 20;  # max samples per class
+nameAttribute = "Paper_originalTitle"
+groupAttribute = "year"
 
-# In[2]:
+groups = None
+
+# You can define your own group rules here:
+
+# groupAttribute ="JournalFixed_displayName"
+
+# groups = {
+#     "Nature Cell Biology": lambda v : v == "Nature Cell Biology",
+#     "Nature Physics": lambda v : v == "Nature Physics",
+# }
 
 
-# queryID = "NaturePhysicsNatureCellBiology_22039080-4b22-4c40-82ea-4f161ec4c92d"
+
 
 interactive = False
-
-
-# #### Setting up some folders and paths
-
-# In[3]:
-
-
-# os.makedirs("networks",exist_ok=True)
-# networkPath = "networks/"+queryID+".xnet"
-#
-# os.makedirs("models", exist_ok=True)
-# modelPath = "models/%s.model"%queryID
-#
-# os.makedirs("sentences", exist_ok=True)
-# sentencesPath = "sentences/%s.txt"%queryID
-#
-# os.makedirs("figures", exist_ok=True)
-#
-# networkPath = "networks/"+queryID+".xnet"
-
-
-# #### Fields available for MAG queries
-
-# In[4]:
-
 
 MAGColumnTypes = {
     "Paper_paperId":int,
@@ -109,14 +91,7 @@ MAGColumnTypes = {
     'isQueryPaper': str,
 }
 
-maxSamples = 20;  # max samples per class
-nameAttribute = "Paper_originalTitle"
-groupAttribute = "year"
 
-groups = {
-        "Recent": lambda v: v > 2015,
-        "Past": lambda v: v < 2000,
-    }
 # ### Function to build a citation network from the data
 
 # In[5]:
@@ -241,6 +216,8 @@ def visualize_figures(networkPath,sentencesPath, modelPath,
                               nameAttribute,sizeAttribute,
                               colorAttribute,nNeighbors,
                               legendColumns = 2, exportFilename = None):
+        global groups
+        
         x = correctEmbedding[:, 0]
         y = correctEmbedding[:, 1]
 
@@ -388,7 +365,13 @@ def visualize_figures(networkPath,sentencesPath, modelPath,
 
 
     labels = np.array(g.vs[nameAttribute])
-
+    if(groups is None):
+        lowerBound = np.percentile(sorted(g.vs["year"]),5)
+        higherBound = np.percentile(sorted(g.vs["year"]),95)
+        groups = {
+            "Recent (>%d)"%higherBound: lambda v : v>=higherBound,
+            "Past (<%d)"%lowerBound: lambda v : v<=lowerBound,
+        }
     def groupMap(index):
         groupValue = g.vs[groupAttribute][index]
         for groupName,func  in groups.items():
