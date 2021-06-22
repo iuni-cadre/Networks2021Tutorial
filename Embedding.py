@@ -171,6 +171,7 @@ class MonitorCallback(CallbackAny2Vec):
 def visualize_figures(networkPath,sentencesPath, modelPath,
                       exportFilename, export_file_semaxis,
                       export_file_correlation):
+    global groups
     g = xnet.xnet2igraph(networkPath)
     
     def make_pbar():
@@ -216,7 +217,6 @@ def visualize_figures(networkPath,sentencesPath, modelPath,
                               nameAttribute,sizeAttribute,
                               colorAttribute,nNeighbors,
                               legendColumns = 2, exportFilename = None):
-        global groups
         
         x = correctEmbedding[:, 0]
         y = correctEmbedding[:, 1]
