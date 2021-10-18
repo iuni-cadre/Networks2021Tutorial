@@ -49,7 +49,7 @@ groups = None
 
 # You can define your own group rules here:
 
-# groupAttribute ="JournalFixed_displayName"
+# groupAttribute ="Journal_normalizedName"
 
 # groups = {
 #     "Nature Cell Biology": lambda v : v == "Nature Cell Biology",
@@ -75,10 +75,7 @@ MAGColumnTypes = {
     'Paper_doi': str,
     'FieldOfStudy_fieldOfStudyId': str,
     'Paper_issue': str,
-    'JournalFixed_displayName': str,
-    'JournalFixed_journalIdFixed': str,
-    'JournalFixed_issn': str,
-    'JournalFixed_publisher': str,
+    'Journal_normalizedName': str,
     'Paper_originalTitle': str,
     'Paper_citationCount': int,
     'Paper_estimatedCitation': int,
@@ -354,7 +351,7 @@ def visualize_figures(networkPath,sentencesPath, modelPath,
         gensimModel,
         nameAttribute="Paper_originalTitle",
         sizeAttribute="Paper_citationCount",
-        #     colorAttribute = "JournalFixed_displayName",
+        #     colorAttribute = "Journal_normalizedName",
         colorAttribute="Community",
         nNeighbors=10,
         legendColumns=4,
