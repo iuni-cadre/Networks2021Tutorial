@@ -21,7 +21,7 @@ To open the Jupyter environment, click on the button `Jupyter Notebook`, then `S
 
 You can now run the examples using the demo data or you can use the Query Builder to generate your own queries. Note that examples 2-4 require the option "Include Citation Network Graph" to be enabled in the query builder, so that the citation networks can be constructed.
 
-#### Using your own querie results
+#### Using your own query results
 In all the examples, a variable named `queryID` can be set to use data from any query results you have under your account. You can check the available results in the `query-results` folder. Set queryID to a composition of `query name`+`_`+`query identifier` , such as in the filenames in the `query-results` folder without the `.csv` or `_edges.csv` suffixes.
 
 
